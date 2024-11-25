@@ -1,0 +1,24 @@
+[versions]
+agp = "8.6.0"
+kotlin = "1.9.0"
+coreKtx = "1.15.0"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
+material = "1.12.0"
+navigationFragment = "2.8.3"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.7.0" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.1.5" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.5.1" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.6.1" }
+material = { group = "com.google.android.material", name = "material", version = "1.8.0" }
+androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
