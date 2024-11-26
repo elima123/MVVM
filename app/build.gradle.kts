@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    namespace = "com.example.kotlin.mypokedexapp"
-    compileSdk = 34
+    namespace = "com.android.covidapiapp"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.kotlin.mypokedexapp"
-        minSdk = 21
+        applicationId = "com.android.covidapiapp"
+        minSdk = 29
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -33,10 +33,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 dependencies {
@@ -44,7 +40,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -52,27 +49,7 @@ dependencies {
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
-    //Glide
-    implementation("com.github.bumptech.glide:glide:4.12.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
-    implementation("jp.wasabeef:glide-transformations:4.3.0")
-
-    //Corrutinas
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
-
-    //Fragment
-    implementation("androidx.fragment:fragment-ktx:1.5.0")
-
-    //Activity
-    implementation("androidx.activity:activity-ktx:1.5.0")
-
-    //Data binding
-    implementation("androidx.databinding:databinding-runtime:7.1.2")
-
-    // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-    // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+    //Para utilizar las api keys
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
 }
