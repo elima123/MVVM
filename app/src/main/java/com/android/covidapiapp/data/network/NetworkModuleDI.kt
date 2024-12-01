@@ -10,6 +10,7 @@ object NetworkModuleDI {
     private val gsonFactory: GsonConverterFactory = GsonConverterFactory.create()
     private val okHttpClient: OkHttpClient = OkHttpClient()
 
+    // invoke() to factorize getRawJSON with the instance
     operator fun invoke(): CovidAPIService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)

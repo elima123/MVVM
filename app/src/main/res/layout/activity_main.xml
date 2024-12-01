@@ -19,7 +19,7 @@
         android:gravity="center"
         android:lineSpacingExtra="8dp"
         android:padding="10dp"
-        android:text="COVID 19 PANDEMIC DATA SORTED BY COUNTRY\n Test it out, type in ''2022-01-13'' and ''2023-01-13''."
+        android:text="COVID 19 PANDEMIC DATA SORTED BY COUNTRY\n Test it out, type in ''2020-02-13'' and ''2023-02-13''."
         android:textSize="15dp" />
 
     <androidx.appcompat.widget.SearchView

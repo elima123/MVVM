@@ -8,33 +8,29 @@ import com.android.covidapiapp.domain.CovidListRequirement
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
+// launch a viewModelScope to fetch de data
 class CovidViewModel : ViewModel() {
 
     private val covidListRequirement = CovidListRequirement()
 
-    private val _covidData = MutableLiveData<List<CovidObject>>() // correct data type = List<CovidObject>
-    val covidData: LiveData<List<CovidObject>> get() = _covidData
+    private val CovidData = MutableLiveData<List<CovidObject>>() // correct data type = List<CovidObject>
+    val Observee_CovidData: LiveData<List<CovidObject>> get() = CovidData
 
-    private val _errorMessage = MutableLiveData<String>()
-    val errorMessage: LiveData<String> get() = _errorMessage
+    private val ErrorMessage = MutableLiveData<String>()
+    val Observee_ErrorMessage: LiveData<String> get() = ErrorMessage
 
     // Fetch the COVID data for a given date
     fun getCovidData(date: String) {
         viewModelScope.launch {
             try {
-                // Fetch data using the provided date
                 val data = covidListRequirement.invoke(date)
-
-                // Check if data is not null and update LiveData
                 if (!data.isNullOrEmpty()) {
-                    _covidData.value = data // Set the fetched data
+                    CovidData.value = data
                 } else {
-                    // If data is null or empty, post an appropriate error message
-                    _errorMessage.value = "No data available for this date."
+                    ErrorMessage.value = "Data is empty."
                 }
             } catch (e: Exception) {
-                // If an exception occurs, post the error message
-                _errorMessage.value = "Error: ${e.message}"
+                ErrorMessage.value = "Error: ${e.message}"
             }
         }
     }

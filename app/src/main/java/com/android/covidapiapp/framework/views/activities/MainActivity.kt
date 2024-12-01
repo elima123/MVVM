@@ -11,27 +11,27 @@ import androidx.lifecycle.Observer
 import com.android.covidapiapp.R
 import com.android.covidapiapp.framework.viewmodel.CovidViewModel
 
+// Execute software
 class MainActivity : AppCompatActivity() {
 
-    private val commentBodies = mutableListOf<String>()
+    private val ListViewContent = mutableListOf<String>()
+    // Built-in Adapter
     private lateinit var arrayAdapter: ArrayAdapter<String>
-
-    // Get the ViewModel instance using viewModels delegate
     private val covidViewModel: CovidViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Set up ListView and ArrayAdapter
+        // Built-in Adapter
+        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, ListViewContent)
         val listView = findViewById<ListView>(R.id.listView)
-        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, commentBodies)
         listView.adapter = arrayAdapter
 
         // Observe the LiveData from ViewModel
-        covidViewModel.covidData.observe(this, Observer { covidData ->
+        covidViewModel.Observee_CovidData.observe(this, Observer { covidData ->
             covidData?.let {
-                // Handle the new COVID data
+                // Iterate the CovidObject list mentioned in CovidAPIService
                 for (item in it) {
                     var stringToPresent: String = item.country + ".\n"
                     if (item.region != "") {
@@ -39,30 +39,29 @@ class MainActivity : AppCompatActivity() {
                     }
                     stringToPresent += "Total reported cases of COVID: ${item.cases.total}.\n" +
                             "Increment of COVID cases today: ${item.cases.new}."
-                    commentBodies.add(stringToPresent)  // Add comment to list
-                }
 
+                    // Add new CovidObject (refined) to the display
+                    ListViewContent.add(stringToPresent)
+                }
+                // Once the list its ready, notify display update
                 arrayAdapter.notifyDataSetChanged()
             }
         })
 
-        covidViewModel.errorMessage.observe(this, Observer { error ->
-            // Handle error messages
-            commentBodies.add("Error: The data is empty/unavailable or the date is incorrect.")
+        // Handle error messages
+        covidViewModel.Observee_ErrorMessage.observe(this, Observer { error ->
+            ListViewContent.add("Error: The data is empty/unavailable or the date is incorrect. ($error)")
             arrayAdapter.notifyDataSetChanged()
         })
 
-        // Set up SearchView and Button
+        // Button configuration to delete previous content and prompt CovidViewModel
         val searchView = findViewById<SearchView>(R.id.query_searchView_id)
         val searchButton = findViewById<Button>(R.id.query_button_id)
-
-        // Set up search button click listener
         searchButton.setOnClickListener {
-            commentBodies.clear()  // Clear old data
-            val query = searchView.query.toString().trim()  // Get query from SearchView
+            ListViewContent.clear()  // Clear up display content
+            val query = searchView.query.toString() // Get string from search bar
             if (query.isNotEmpty()) {
-                // Trigger the fetch for the entered date
-                covidViewModel.getCovidData(query)  // Use the query value as the date
+                covidViewModel.getCovidData(query) // Trigger the fetch for searchView string
             }
         }
     }
