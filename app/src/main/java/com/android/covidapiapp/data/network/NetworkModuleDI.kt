@@ -5,21 +5,17 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class NetworkModuleDI { // object substitute
+object NetworkModuleDI {
 
-    // Build OkHttpClient (No need for AuthInterceptor since API key is in the headers)
-    val httpClient = OkHttpClient.Builder()
-        .build()
-
-    val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(httpClient)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    val myApi = retrofit.create(CovidAPIService::class.java)
+    private val gsonFactory: GsonConverterFactory = GsonConverterFactory.create()
+    private val okHttpClient: OkHttpClient = OkHttpClient()
 
     operator fun invoke(): CovidAPIService {
-        return myApi
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(gsonFactory)
+            .build()
+            .create(CovidAPIService::class.java)
     }
 }
